@@ -1,0 +1,10 @@
+<% flash.each do |type, msg| %>
+  <div>
+    <%= msg %>
+  </div>
+<% end %>
+
+<%= form_with do |form| %>
+  <%= render RpiTurnstile::TurnstileComponent.new %>
+  <%= form.submit "Submit" %>
+<% end %>
