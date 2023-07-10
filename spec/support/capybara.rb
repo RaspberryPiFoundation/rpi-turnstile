@@ -36,13 +36,3 @@ def set_capybara_screen_resolution(device: nil, orientation: nil)
 
   Capybara.page.current_window.resize_to(*resolution)
 end
-
-REMOTE_SELENIUM_URL = "http://#{ENV.fetch('SELENIUM_HOST', 'localhost')}:#{ENV.fetch('SELENIUM_PORT', '4444')}/wd/hub".freeze
-
-Capybara.register_driver :remote_selenium_headless do |app|
-  options = Selenium::WebDriver::Firefox::Options.new
-  options.add_argument('-headless')
-
-  Capybara.javascript_driver = :remote_selenium
-  Capybara::Selenium::Driver.new(app, browser: :remote, url: REMOTE_SELENIUM_URL, options:)
-end

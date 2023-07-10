@@ -89,16 +89,11 @@ RSpec.configure do |config|
     # Ensure we update the driver here, while we can connect to the network
     Webdrivers::Geckodriver.update
 
-    if ENV.fetch('CI', nil).present?
-      driven_by :remote_selenium_headless, using: :firefox
-    else
-      driven_by :selenium, using: :firefox
-    end
+    driven_by :selenium, using: :firefox
+    driven_by ENV.fetch('CI', nil).present? ? :selenium_headless : :selenium, using: :firefox
 
     # Need to set the hostname, otherwise it defaults to www.example.com.
     default_url_options[:host] = Capybara.server_host
-
-    WebMock.disable_net_connect!(allow_localhost: true, allow: [ENV.fetch('SELENIUM_HOST', 'selenium'), Capybara.server_host])
 
     # set_capybara_screen_resolution(**example.metadata.slice(:device, :orientation))
   end
