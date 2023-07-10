@@ -22,22 +22,22 @@ jobs:
          ruby-version: 3.2
          bundler-cache: true
 
-      - name: Run rspec
-        run: bundle exec rspec
+     - name: Run rspec
+       run: bundle exec rspec
 
-      - name: Archive coverage
-        if: ${{ success() || failure() }}
-        uses: actions/upload-artifact@v3
-        with:
-          name: code-coverage-report
-          path: coverage/
+     - name: Archive coverage
+       if: ${{ success() || failure() }}
+       uses: actions/upload-artifact@v3
+       with:
+         name: code-coverage-report
+         path: coverage/
 
-      - name: Archive Capybara screenshots
-        if: ${{ failure() }}
-        uses: actions/upload-artifact@v3
-        with:
-          name: capybara-screenshots
-          path: spec/dummy/tmp/capybara/
+     - name: Archive Capybara screenshots
+       if: ${{ failure() }}
+       uses: actions/upload-artifact@v3
+       with:
+        name: capybara-screenshots
+        path: spec/dummy/tmp/capybara/
 
   post_coverage:
     runs-on: ubuntu-latest
