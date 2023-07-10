@@ -13,8 +13,7 @@ jobs:
         ruby-version: '3.2'
         bundler-cache: true
 
-     - name: install Firefox
-       run: sudo apt install -y --no-install-recommends firefox
+     - uses: browser-actions/setup-firefox@v1
 
      - name: Run rspec
        run: bundle exec rspec
