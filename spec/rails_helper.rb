@@ -91,6 +91,5 @@ RSpec.configure do |config|
 
     # Need to set the hostname, otherwise it defaults to www.example.com.
     default_url_options[:host] = Capybara.server_host
-
   end
 end
