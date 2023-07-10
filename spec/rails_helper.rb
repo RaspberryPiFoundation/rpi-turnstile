@@ -91,6 +91,9 @@ RSpec.configure do |config|
 
     if ENV.fetch('CI', nil).present?
       driven_by :remote_selenium_headless, using: :firefox
+      Capybara.server_host = '0.0.0.0'
+      Capybara.server_port = rand(40000...60000)
+      Capybara.app_host = "http://host.docker.internal:#{Capybara.server_port}"
     else
       driven_by :selenium, using: :firefox
     end
