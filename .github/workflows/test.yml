@@ -1,0 +1,62 @@
+name: 'Test'
+on:
+  workflow_call: {}
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+     - uses: actions/checkout@v3
+
+     - uses: ruby/setup-ruby@v1
+       with:
+        ruby-version: '3.2'
+        bundler-cache: true
+
+     - uses: browser-actions/setup-firefox@v1
+
+     - name: Run rspec
+       run: bundle exec rspec
+
+     - name: Archive coverage
+       if: ${{ success() || failure() }}
+       uses: actions/upload-artifact@v3
+       with:
+         name: code-coverage-report
+         path: coverage/
+
+     - name: Archive Capybara screenshots
+       if: ${{ failure() }}
+       uses: actions/upload-artifact@v3
+       with:
+        name: capybara-screenshots
+        path: spec/dummy/tmp/capybara/
+
+  post_coverage:
+    runs-on: ubuntu-latest
+    needs: test
+    permissions:
+      pull-requests: write
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: code-coverage-report
+          path: coverage/
+
+      - name: Install JQ
+        run: sudo apt-get install -y jq
+
+      - name: Determine coverage
+        id: coverage
+        run: |
+          # Check to see if coverage is under `result.line` or under `result.covered_percent` (older versions)
+          coverage=$(jq -r 'if .result.line then .result.line else .result.covered_percent end' < coverage/.last_run.json)
+          [ "${coverage}" = "null" ] && coverage="** Failed to determine coverage **"
+          echo value="${coverage}" >> "$GITHUB_OUTPUT"
+
+      - uses: mshick/add-pr-comment@v2
+        with:
+          message: |
+            * GitHub Actions [run \#${{ github.run_id }}](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
+
+            Test coverage: ${{ steps.coverage.outputs.value }}%

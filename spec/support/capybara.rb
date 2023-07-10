@@ -36,5 +36,3 @@ def set_capybara_screen_resolution(device: nil, orientation: nil)
 
   Capybara.page.current_window.resize_to(*resolution)
 end
-
-Capybara.javascript_driver = :selenium

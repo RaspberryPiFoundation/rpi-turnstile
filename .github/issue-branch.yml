@@ -1,0 +1,25 @@
+---
+branchName: '${issue.number}-${issue.title[0,64],}'
+silent: false
+openDraftPR: true
+autoCloseIssue: true
+copyIssueAssigneeToPR: true
+copyIssueDescriptionToPR: true
+gitSafeReplacementChar: '-'
+branches:
+  - label: accessibility
+    prefix: '${assignee.login}/a11y/'
+  - label: bug
+    prefix: '${assignee.login}/bugfix/'
+  - label: dependencies
+    prefix: '${assignee.login}/chore/'
+  - label: documentation
+    prefix: '${assignee.login}/docs/'
+  - label: enhancement
+    prefix: '${assignee.login}/feature/'
+  - label: i18n
+    prefix: '${assignee.login}/i18n/'
+  - label: security-review
+    prefix: '${assignee.login}/security/'
+  - label: '*'
+    prefix: '${assignee.login}/issues/'

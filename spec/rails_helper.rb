@@ -29,8 +29,7 @@ require 'rspec/rails'
 # directory. Alternatively, in the individual `*_spec.rb` files, manually
 # require only the support files necessary.
 
-pp __dir__
-Dir[File.join(__dir__, 'support', '*.rb')].each { |f| pp f;  require f }
+Dir[File.join(__dir__, 'support', '*.rb')].each { |f| require f }
 
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
@@ -59,7 +58,7 @@ RSpec.configure do |config|
   # https://rspec.info/features/6-0/rspec-rails
   config.infer_spec_type_from_file_location!
 
-  config.define_derived_metadata(:file_path => Regexp.new('/spec/components/')) do |metadata|
+  config.define_derived_metadata(file_path: Regexp.new('/spec/components/')) do |metadata|
     metadata[:type] = :component
   end
 
@@ -84,23 +83,13 @@ RSpec.configure do |config|
     end
 
     # We need to allow net connect at this stage to allow WebDrivers to update
-    # or Capybara to talk to selenium etc.
     WebMock.allow_net_connect!
-
-    # Ensure we update the driver here, while we can connect to the network
     Webdrivers::Geckodriver.update
+    WebMock.disable_net_connect!(allow_localhost: true, allow: [Capybara.server_host])
 
-    if ENV.fetch('CI', ENV.fetch('HEADLESS', nil)).present?
-      driven_by :selenium_headless, using: :firefox
-    else
-      driven_by :selenium, using: :firefox
-    end
+    driven_by ENV.fetch('CI', nil).present? ? :selenium_headless : :selenium, using: :firefox
 
     # Need to set the hostname, otherwise it defaults to www.example.com.
     default_url_options[:host] = Capybara.server_host
-
-    WebMock.disable_net_connect!(allow_localhost: true, allow: [ENV.fetch('SELENIUM_HOST', 'selenium'), Capybara.server_host])
-
-    # set_capybara_screen_resolution(**example.metadata.slice(:device, :orientation))
   end
 end
