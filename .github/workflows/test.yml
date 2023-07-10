@@ -13,8 +13,8 @@ jobs:
         ruby-version: '3.0' # Not needed with a .ruby-version file
         bundler-cache: true # ru
 
-    - name: install Firefox
-      run: sudo apt install -y --no-install-recommends firefox
+     - name: install Firefox
+       run: sudo apt install -y --no-install-recommends firefox
 
      - name: Run rspec
        run: bundle exec rspec
