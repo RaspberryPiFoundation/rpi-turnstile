@@ -10,8 +10,8 @@ jobs:
 
      - uses: ruby/setup-ruby@v1
        with:
-        ruby-version: '3.0' # Not needed with a .ruby-version file
-        bundler-cache: true # ru
+        ruby-version: '3.2'
+        bundler-cache: true
 
      - name: install Firefox
        run: sudo apt install -y --no-install-recommends firefox
