@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe RpiTurnstile::TurnstileComponent, type: :component do
   subject { page }
 
-  let(:component) { described_class.new(attrs:) }
+  let(:component) { described_class.new(attrs: attrs) }
   let(:attrs) { {} }
   let(:sitekey) { nil }
 

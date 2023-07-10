@@ -18,7 +18,7 @@ module RpiTurnstile
 
       Rails.logger.debug ENV.inspect
 
-      @attrs = attrs.merge(class: classes, data:)
+      @attrs = attrs.merge(class: classes, data: data)
     end
 
     def sitekey

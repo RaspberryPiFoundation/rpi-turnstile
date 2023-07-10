@@ -6,9 +6,8 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 # Specify your gem's dependencies in rpi_turnstile.gemspec.
 gemspec
 
+gem 'importmap-rails'
 gem 'puma'
-gem 'sprockets-rails'
-gem 'stimulus-rails'
 
 group :development do
   gem 'debug'
