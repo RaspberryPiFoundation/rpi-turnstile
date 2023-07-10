@@ -26,6 +26,9 @@ jobs:
 
      - name: Run rspec
        run: bundle exec rspec
+       env:
+         SELENIUM_HOST: selenium
+         HOSTNAME: host.docker.internal # Allows selenium to talk back to the webserver
 
      - name: Archive coverage
        if: ${{ success() || failure() }}
