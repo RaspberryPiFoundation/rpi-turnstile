@@ -1,5 +1,8 @@
 name: Publish Ruby gem
 
+on:
+  workflow_call: {}
+
 jobs:
   build:
     name: Build & Publish
