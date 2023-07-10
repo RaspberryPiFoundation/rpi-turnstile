@@ -6,9 +6,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [0.1.1] - 2023-07-10
+
+### Fixed
+
+* Updated CI to build gem on tag
+
 ## [0.1.0] - 2023-07-10
 
 * Initial release
 
-[unreleased]: https://github.com/RaspberryPiFoundation/rpi-turnstile/compare/v0.1.0...HEAD
+[unreleased]: https://github.com/RaspberryPiFoundation/rpi-turnstile/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/RaspberryPiFoundation/rpi-turnstile/releases/tag/v0.1.0
 [0.1.0]: https://github.com/RaspberryPiFoundation/rpi-turnstile/releases/tag/v0.1.0
