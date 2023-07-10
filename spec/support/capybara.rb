@@ -53,4 +53,3 @@ Capybara.register_driver :remote_selenium_headless do |app|
   Capybara.javascript_driver = :remote_selenium
   Capybara::Selenium::Driver.new(app, browser: :remote, url: REMOTE_SELENIUM_URL, options:)
 end
-

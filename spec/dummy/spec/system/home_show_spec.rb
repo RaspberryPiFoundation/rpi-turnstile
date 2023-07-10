@@ -62,7 +62,7 @@ RSpec.describe '/' do
         expect(RpiTurnstile::Api).to have_received(:siteverify)
       end
 
-      context 'when CF turnstile raises an error' do
+      context 'when CF turnstile raises an error' do # rubocop:disable RSpec/NestedGroups
         before do
           allow(RpiTurnstile::Api).to receive(:siteverify).and_return(false)
           click_button('Submit')
