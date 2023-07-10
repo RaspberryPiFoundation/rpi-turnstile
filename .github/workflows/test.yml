@@ -5,6 +5,8 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    container:
+      image: 'ruby:3.2-bookworm'
     services:
       selenium:
         image: 'selenium/standalone-firefox:latest'
