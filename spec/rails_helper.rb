@@ -29,8 +29,7 @@ require 'rspec/rails'
 # directory. Alternatively, in the individual `*_spec.rb` files, manually
 # require only the support files necessary.
 
-pp __dir__
-Dir[File.join(__dir__, 'support', '*.rb')].each { |f| pp f;  require f }
+Dir[File.join(__dir__, 'support', '*.rb')].each { |f| require f }
 
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
@@ -90,8 +89,8 @@ RSpec.configure do |config|
     # Ensure we update the driver here, while we can connect to the network
     Webdrivers::Geckodriver.update
 
-    if ENV.fetch('CI', ENV.fetch('HEADLESS', nil)).present?
-      driven_by :selenium_headless, using: :firefox
+    if ENV.fetch('CI', nil).present?
+      driven_by :remote_selenium_headless, using: :firefox
     else
       driven_by :selenium, using: :firefox
     end

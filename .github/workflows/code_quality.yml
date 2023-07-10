@@ -1,0 +1,27 @@
+name: 'Code quality'
+on:
+  workflow_call: {}
+
+jobs:
+  # Dummy check to make sure everything has passed
+  code_quality:
+    runs-on: ubuntu-latest
+    needs:
+      - rubocop
+    steps:
+      - run: echo "All code quality checks complete."
+        working-directory: '/'
+
+  rubocop:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.2.x"
+          bundler-cache: true
+
+      - name: Inspecting with Rubocop
+        run: rubocop
+
