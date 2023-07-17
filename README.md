@@ -47,6 +47,26 @@ To make use of these options, add them to the `new` call when rendering.
 render RpiTurnstile::TurnstileComponent.new(attrs: { class: 'my-extra-css', id: 'woo'}, size: 'compact')
 ```
 
+## Testing your integration
+
+In order for the component to render, you need to set the site key.  Also when testing you might want to check what happens when verification fails.
+
+Firstly, to stub the site key, you need to stub the `RpiTurnstile::Api::SITEKEY` constant with a value.
+
+```ruby
+stub_const('RpiTurnstile::Api::SITEKEY', 'abc')
+```
+
+That should allow the component to render.
+
+Secondly, to stub and check what happens when the API verifies (or not), you can stub the `RpiTurnstile::Api#siteverify` class method:
+
+```rspec
+allow(RpiTurnstile::Api).to receive(:siteverify).and_return(true)
+```
+
+Return `false` here if you want verification to fail.
+
 ## Installation
 
 Add this line to your application's Gemfile:
