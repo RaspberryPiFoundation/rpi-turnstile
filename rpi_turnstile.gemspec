@@ -20,7 +20,7 @@ Gem::Specification.new do |spec|
 
   spec.files = Dir['{app,config,lib}/**/*', 'LICENSE', 'README.md']
 
-  spec.required_ruby_version = '~> 3.0'
+  spec.required_ruby_version = '>= 2.7'
 
   spec.add_dependency 'faraday', '~> 2.0'
   spec.add_dependency 'rails', '~> 7.0'

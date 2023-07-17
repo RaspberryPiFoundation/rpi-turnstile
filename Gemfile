@@ -8,6 +8,8 @@ gemspec
 
 gem 'importmap-rails'
 gem 'puma'
+gem 'sprockets-rails'
+gem 'stimulus-rails'
 
 group :development do
   gem 'debug'
