@@ -10,6 +10,6 @@ class HomeController < ApplicationController
   def submit
     notice = rpi_turnstile_verified? ? "✅ Turnstile verification passed." : "❌ Turnstile verification failed."
 
-    redirect_to '/', notice:
+    redirect_to '/', notice: notice
   end
 end

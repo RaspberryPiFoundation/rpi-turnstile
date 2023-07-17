@@ -20,7 +20,7 @@ module RpiTurnstile
         return true
       end
 
-      response = conn.post(API_URL, response:, secret:)
+      response = conn.post(API_URL, response: response, secret: secret)
 
       response.body['success']
     end
