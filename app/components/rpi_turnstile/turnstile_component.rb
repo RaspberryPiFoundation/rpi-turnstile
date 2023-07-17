@@ -6,7 +6,7 @@ module RpiTurnstile
   class TurnstileComponent < ViewComponent::Base
     BASE_CLASS = 'rpi-turnstile'
 
-    def initialize(attrs: {})
+    def initialize(attrs: {}, **kwargs)
       super
 
       classes = [BASE_CLASS]
@@ -14,9 +14,10 @@ module RpiTurnstile
 
       data = { controller: 'rpi-turnstile--turnstile',
                'rpi-turnstile--turnstile-target': 'container',
+               'rpi-turnstile--turnstile-language-value': I18n.locale || :en,
                'rpi-turnstile--turnstile-sitekey-value': sitekey }
 
-      Rails.logger.debug ENV.inspect
+      data.merge!(kwargs.transform_keys { |k| "rpi-turnstile--turnstile-#{k}-value" })
 
       @attrs = attrs.merge(class: classes, data: data)
     end
