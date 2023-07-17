@@ -34,5 +34,11 @@ RSpec.describe RpiTurnstile::TurnstileComponent, type: :component do
 
       it { is_expected.to have_css('div.rpi-turnstile#foo') }
     end
+
+    context 'when another option is set' do
+      let(:component) { described_class.new(foo: :bar, attrs: {}) }
+
+      it { is_expected.to have_css("div.rpi-turnstile[data-rpi-turnstile--turnstile-foo-value='bar']") }
+    end
   end
 end

@@ -31,6 +31,21 @@ Then in the controller that handles the POST from the form, include the `RpiTurn
 
 Check out the Home controller in the [dummy app](spec/dummy/app/controllers/home_controller.rb) and its [associated views](spec/dummy/app/views/home/show.html.erb).
 
+## Customising
+
+There are [myriad options](https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/#configurations) that the widget can take, however so far we only support:
+
+* language (default to `I18n.locale` or `en`)
+* theme (default to `auto`)
+* size (default to `normal`)
+
+I'm sure more will be added in future.  You can also add HTML attributes through the `attrs` parameter, e.g. `class`, `id`, etc.
+
+To make use of these options, add them to the `new` call when rendering.
+
+```ruby
+render RpiTurnstile::TurnstileComponent.new(attrs: { class: 'my-extra-css', id: 'woo'}, size: 'compact')
+```
 
 ## Installation
 
