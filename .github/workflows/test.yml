@@ -10,7 +10,6 @@ jobs:
 
      - uses: ruby/setup-ruby@v1
        with:
-        ruby-version: '3.2'
         bundler-cache: true
 
      - uses: browser-actions/setup-firefox@v1
