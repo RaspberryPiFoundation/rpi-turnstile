@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [0.2.0] - 2023-07-17
+
 * Relax Ruby requirements down to version 2.7 (#4)
 
 ## [0.1.1] - 2023-07-10
@@ -18,6 +20,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 * Initial release
 
-[unreleased]: https://github.com/RaspberryPiFoundation/rpi-turnstile/compare/v0.1.1...HEAD
+[unreleased]: https://github.com/RaspberryPiFoundation/rpi-turnstile/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/RaspberryPiFoundation/rpi-turnstile/releases/tag/v0.2.0
 [0.1.1]: https://github.com/RaspberryPiFoundation/rpi-turnstile/releases/tag/v0.1.0
 [0.1.0]: https://github.com/RaspberryPiFoundation/rpi-turnstile/releases/tag/v0.1.0
