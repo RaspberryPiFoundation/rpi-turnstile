@@ -6,7 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
-* Relax Ruby requirements down to version 2.7 (#4)
+* Relax Ruby requirements down to version 3.0 (#4)
 
 ## [0.1.1] - 2023-07-10
 
