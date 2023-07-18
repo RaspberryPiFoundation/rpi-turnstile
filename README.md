@@ -33,13 +33,13 @@ Check out the Home controller in the [dummy app](spec/dummy/app/controllers/home
 
 ## Customising
 
-There are [myriad options](https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/#configurations) that the widget can take, however so far we only support:
+There are [myriad options](https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/#configurations) that the widget can take.  You can pass any of these options in to the component as arguments. e.g.
 
 * language (default to `I18n.locale` or `en`)
-* theme (default to `auto`)
-* size (default to `normal`)
+* theme
+* size
 
-I'm sure more will be added in future.  You can also add HTML attributes through the `attrs` parameter, e.g. `class`, `id`, etc.
+The options should be exactly as shown in the docs, i.e. with dashes rather than the more usual underscores encountered in Ruby.  You can also add HTML attributes through the `attrs` parameter, e.g. `class`, `id`, etc.
 
 To make use of these options, add them to the `new` call when rendering.
 

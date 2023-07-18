@@ -2,12 +2,7 @@ import { Controller } from '@hotwired/stimulus'
 
 export default class extends Controller {
   static targets = ['container']
-  static values = {
-    sitekey: String,
-    theme: { type: String, default: "auto" },
-    language: { type: String, default: "en-GB" },
-    size: { type: String, default: "normal" }
-  }
+  static values = { options: Object }
 
   static sourceUrl = 'https://challenges.cloudflare.com/turnstile/v0/api.js'
   static callbackFunctionName = '__turnstileLoadedCallback'
@@ -32,7 +27,7 @@ export default class extends Controller {
   }
 
   connect () {
-    if (!this.hasSitekeyValue) return
+    if (!this.hasOptionsValue) return
 
     // This call waits for the promise returned by loadTurnstile to resolve
     // before trying to call render().
@@ -43,12 +38,7 @@ export default class extends Controller {
 
   render () {
     // See https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/#configurations
-    window.turnstile.render(this.containerTarget, {
-      language: this.languageValue,
-      sitekey: this.sitekeyValue,
-      size: this.sizeValue,
-      theme: this.themeValue
-    })
+    window.turnstile.render(this.containerTarget, this.optionsValue)
   }
 
   // This returns a promise that resolves when the loading has completed, or
