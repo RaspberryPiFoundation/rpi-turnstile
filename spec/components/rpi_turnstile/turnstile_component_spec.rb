@@ -20,8 +20,10 @@ RSpec.describe RpiTurnstile::TurnstileComponent, type: :component do
 
   context 'when sitekey is set' do
     let(:sitekey) { 'abc' }
+    let(:options) { { language: :en, sitekey: sitekey } }
+    let(:encoded_opts) { options.to_json }
 
-    it { is_expected.to have_css("div.rpi-turnstile[data-controller='rpi-turnstile--turnstile'][data-rpi-turnstile--turnstile-target='container'][data-rpi-turnstile--turnstile-sitekey-value='#{sitekey}']") }
+    it { is_expected.to have_css("div.rpi-turnstile[data-controller='rpi-turnstile--turnstile'][data-rpi-turnstile--turnstile-target='container'][data-rpi-turnstile--turnstile-options-value='#{encoded_opts}']") }
 
     context 'when a class is set' do
       let(:attrs) { { class: 'foo' } }
@@ -37,8 +39,9 @@ RSpec.describe RpiTurnstile::TurnstileComponent, type: :component do
 
     context 'when another option is set' do
       let(:component) { described_class.new(foo: :bar, attrs: {}) }
+      let(:options) { { foo: :bar, language: :en, sitekey: sitekey } }
 
-      it { is_expected.to have_css("div.rpi-turnstile[data-rpi-turnstile--turnstile-foo-value='bar']") }
+      it { is_expected.to have_css("div.rpi-turnstile[data-rpi-turnstile--turnstile-options-value='#{encoded_opts}']") }
     end
   end
 end

@@ -13,11 +13,10 @@ module RpiTurnstile
       classes += Array(attrs[:class])
 
       data = { controller: 'rpi-turnstile--turnstile',
-               'rpi-turnstile--turnstile-target': 'container',
-               'rpi-turnstile--turnstile-language-value': I18n.locale || :en,
-               'rpi-turnstile--turnstile-sitekey-value': sitekey }
+               'rpi-turnstile--turnstile-target': 'container' }
 
-      data.merge!(kwargs.transform_keys { |k| "rpi-turnstile--turnstile-#{k}-value" })
+      options = kwargs.merge(language: I18n.locale || :en, sitekey: sitekey)
+      data['rpi-turnstile--turnstile-options-value'] = options.to_json
 
       @attrs = attrs.merge(class: classes, data: data)
     end
