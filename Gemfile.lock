@@ -3,6 +3,7 @@ PATH
   specs:
     rpi_turnstile (0.3.0)
       faraday (~> 2.0)
+      importmap-rails
       rails (~> 7.0)
       sprockets-rails (~> 3.4)
       stimulus-rails (~> 1.2)
