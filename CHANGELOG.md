@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [0.3.1] - 2023-11-13
+
+### Added
+
+* Add importmap-rails as a gem dependency (#12)
+
 ## [0.3.0] - 2023-07-18
 
 ### Added
@@ -29,7 +35,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 * Initial release
 
-[unreleased]: https://github.com/RaspberryPiFoundation/rpi-turnstile/compare/v0.3.0...HEAD
+[unreleased]: https://github.com/RaspberryPiFoundation/rpi-turnstile/compare/v0.3.1...HEAD
+[0.3.1]: https://github.com/RaspberryPiFoundation/rpi-turnstile/releases/tag/v0.3.1
 [0.3.0]: https://github.com/RaspberryPiFoundation/rpi-turnstile/releases/tag/v0.3.0
 [0.2.0]: https://github.com/RaspberryPiFoundation/rpi-turnstile/releases/tag/v0.2.0
 [0.1.1]: https://github.com/RaspberryPiFoundation/rpi-turnstile/releases/tag/v0.1.0
