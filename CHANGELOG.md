@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [0.4.0] - 2024-06-10
+
 ### Changed
 * Support for Ruby 2.7, 3.0, and 3.1 has been dropped. The minimum supported Ruby version is now 3.2. (#15)
 
@@ -42,7 +44,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 * Initial release
 
-[unreleased]: https://github.com/RaspberryPiFoundation/rpi-turnstile/compare/v0.3.1...HEAD
+[unreleased]: https://github.com/RaspberryPiFoundation/rpi-turnstile/compare/v0.4.0...HEAD
+[0.4.0]: https://github.com/RaspberryPiFoundation/rpi-turnstile/compare/v0.4.0
 [0.3.1]: https://github.com/RaspberryPiFoundation/rpi-turnstile/releases/tag/v0.3.1
 [0.3.0]: https://github.com/RaspberryPiFoundation/rpi-turnstile/releases/tag/v0.3.0
 [0.2.0]: https://github.com/RaspberryPiFoundation/rpi-turnstile/releases/tag/v0.2.0
