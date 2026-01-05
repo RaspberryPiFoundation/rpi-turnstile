@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Changed
+* Support for Ruby 2.7, 3.0, and 3.1 has been dropped. The minimum supported Ruby version is now 3.2. (#15)
+
+### Fixed
+
+* Update GitHub Actions workflows to use latest upload/download artifact actions (#15)
+
 ## [0.3.1] - 2023-11-13
 
 ### Added
