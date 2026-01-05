@@ -13,7 +13,7 @@ gem 'stimulus-rails'
 
 group :development do
   gem 'debug'
-  gem 'openssl'
+  gem 'openssl', '~> 3.0'
   gem 'rubocop'
   gem 'rubocop-performance'
   gem 'rubocop-rails'
