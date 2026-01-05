@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
-require 'rpi_turnstile/api'
 
 RSpec.describe '/' do
   subject { page }
