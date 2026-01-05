@@ -23,6 +23,7 @@ jobs:
        with:
          name: code-coverage-report
          path: coverage/
+         include-hidden-files: true
 
      - name: Archive Capybara screenshots
        if: ${{ failure() }}
