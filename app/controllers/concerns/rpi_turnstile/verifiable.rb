@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-# require 'rpi_turnstile/api'
-
 module RpiTurnstile
   module Verifiable
     extend ActiveSupport::Concern
