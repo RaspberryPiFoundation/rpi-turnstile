@@ -12,6 +12,7 @@ export default class extends Controller {
     resolve: () => {},
     reject: () => {}
   }
+  widgetId = undefined
 
   initialize () {
     this.loadingState = typeof window.turnstile !== 'undefined' ? 'ready' : 'unloaded'
@@ -36,9 +37,19 @@ export default class extends Controller {
       .catch((e) => console.log(e))
   }
 
+  disconnect () {
+    if (this.widgetId !== undefined) {
+      window.turnstile.remove(this.widgetId)
+      this.widgetId = undefined
+    }
+  }
+
   render () {
-    // See https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/#configurations
-    window.turnstile.render(this.containerTarget, this.optionsValue)
+    if (this.widgetId !== undefined) return
+
+    // See https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/widget-configurations/
+    // render() returns a widget ID used for reset(), remove(), execute(), and getResponse().
+    this.widgetId = window.turnstile.render(this.containerTarget, this.optionsValue)
   }
 
   // This returns a promise that resolves when the loading has completed, or
