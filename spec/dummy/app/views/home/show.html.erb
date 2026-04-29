@@ -6,7 +6,7 @@
 
 <a href="/<%= SecureRandom.uuid %>">Go to random page</a>
 
-<%= form_with do |form| %>
+<%= form_with url: "/#{SecureRandom.uuid}" do |form| %>
   <%= render RpiTurnstile::TurnstileComponent.new %>
   <%= form.submit "Submit" %>
 <% end %>
