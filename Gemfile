@@ -10,6 +10,7 @@ gem 'importmap-rails'
 gem 'puma'
 gem 'sprockets-rails'
 gem 'stimulus-rails'
+gem 'turbo-rails'
 
 group :development do
   gem 'debug'

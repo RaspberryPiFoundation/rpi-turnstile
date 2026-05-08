@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Fixed
+* Fix double rendering of the Turnstile widget when used with Turbo (#28)
+
 ## [0.4.0] - 2024-06-10
 
 ### Changed

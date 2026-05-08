@@ -1,6 +1,3 @@
-require 'rpi_turnstile/turnstile_component'
-require 'rpi_turnstile/verifiable'
-
 class HomeController < ApplicationController
   include RpiTurnstile::Verifiable
 
