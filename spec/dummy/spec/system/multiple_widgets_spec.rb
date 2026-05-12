@@ -21,7 +21,7 @@ RSpec.describe '/multiple' do
       # loadTurnstile(). The shared static loadingState means only the first
       # call injects a <script>; subsequent callers just queue a pending promise.
       # We verify the outcome by counting script tags with the Turnstile URL.
-      have_css('script[src*="challenges.cloudflare.com/turnstile"]', count: 1)
+      expect(page).to have_css('script[src*="challenges.cloudflare.com/turnstile"]', count: 1, visible: false)
     end
   end
 end
