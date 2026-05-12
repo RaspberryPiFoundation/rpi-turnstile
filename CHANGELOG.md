@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Fixed
 * Fix double rendering of the Turnstile widget when used with Turbo (#28)
+* Allow more than one Turnstile widget to be rendered on the same page (#30)
 
 ## [0.4.0] - 2024-06-10
 
