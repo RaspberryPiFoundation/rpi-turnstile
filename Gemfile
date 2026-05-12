@@ -33,6 +33,5 @@ group :test do
   gem 'rspec-rails'
   gem 'selenium-webdriver'
   gem 'simplecov', require: false
-  gem 'webdrivers'
   gem 'webmock'
 end
