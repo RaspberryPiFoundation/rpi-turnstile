@@ -1,0 +1,13 @@
+<h1>Multiple Turnstile widgets</h1>
+
+<h2>First widget</h2>
+<%= form_with do |form| %>
+  <%= render RpiTurnstile::TurnstileComponent.new %>
+  <%= form.submit 'Submit widget 1' %>
+<% end %>
+
+<h2>Second widget</h2>
+<%= form_with do |form| %>
+  <%= render RpiTurnstile::TurnstileComponent.new %>
+  <%= form.submit 'Submit widget 2' %>
+<% end %>
