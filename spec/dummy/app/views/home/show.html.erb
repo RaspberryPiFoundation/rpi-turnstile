@@ -1,10 +1,15 @@
+<h1>Turnstile test page</h1>
+
 <% flash.each do |type, msg| %>
   <div>
     <%= msg %>
   </div>
 <% end %>
 
-<a href="/<%= SecureRandom.uuid %>">Go to random page</a>
+<p>
+<a href="/<%= SecureRandom.uuid %>">Go to random page</a><br/>
+<a href="/multiple">Go to page with multiple turnstiles</a>
+</p>
 
 <%= form_with url: "/#{SecureRandom.uuid}" do |form| %>
   <%= render RpiTurnstile::TurnstileComponent.new %>

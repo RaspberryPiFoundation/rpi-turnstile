@@ -7,7 +7,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 gemspec
 
 gem 'importmap-rails'
-gem 'puma'
+gem 'puma', '>= 6.4'
 gem 'sprockets-rails'
 gem 'stimulus-rails'
 gem 'turbo-rails'
@@ -33,6 +33,5 @@ group :test do
   gem 'rspec-rails'
   gem 'selenium-webdriver'
   gem 'simplecov', require: false
-  gem 'webdrivers'
   gem 'webmock'
 end

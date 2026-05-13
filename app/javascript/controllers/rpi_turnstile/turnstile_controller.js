@@ -7,32 +7,20 @@ export default class extends Controller {
   static sourceUrl = 'https://challenges.cloudflare.com/turnstile/v0/api.js'
   static callbackFunctionName = '__turnstileLoadedCallback'
 
-  loadingState = undefined
-  loadingPromise = {
-    resolve: () => {},
-    reject: () => {}
-  }
+  // Shared across all instances so that multiple widgets on the same page
+  // only ever inject one script tag and all resolve together.
+  static loadingState = typeof window.turnstile !== 'undefined' ? 'ready' : 'unloaded'
+  static pendingResolvers = []
+  static pendingRejectors = []
+
   widgetId = undefined
-
-  initialize () {
-    this.loadingState = typeof window.turnstile !== 'undefined' ? 'ready' : 'unloaded'
-
-    // This defines a global function that can be called by Turnstile once it
-    // has been loaded and ready.  The callbackFunctionName name is used in the
-    // URL of the script in the loadTurnstile() function.
-    window[this.constructor.callbackFunctionName] = () => {
-      this.loadingPromise.resolve()
-      this.loadingState = 'ready'
-      delete window[this.constructor.callbackFunctionName]
-    }
-  }
 
   connect () {
     if (!this.hasOptionsValue) return
 
     // This call waits for the promise returned by loadTurnstile to resolve
     // before trying to call render().
-    this.loadTurnstile()
+    this.constructor.loadTurnstile()
       .then(() => { this.render() })
       .catch((e) => console.log(e))
   }
@@ -52,37 +40,46 @@ export default class extends Controller {
     this.widgetId = window.turnstile.render(this.containerTarget, this.optionsValue)
   }
 
-  // This returns a promise that resolves when the loading has completed, or
-  // rejects if an error is raised during loading.
-  loadTurnstile () {
+  // Static so that all instances share a single script load. Returns a promise
+  // that resolves when Turnstile is ready, or rejects if the script fails to load.
+  static loadTurnstile () {
+    if (this.loadingState === 'ready') {
+      return Promise.resolve()
+    }
+
     if (this.loadingState === 'unloaded') {
       this.loadingState = 'loading'
 
+      // This defines a global function that Turnstile calls once it is ready.
+      // The name is embedded in the script URL via the onload parameter.
       // See https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/#explicitly-render-the-turnstile-widget
-      const url = `${this.constructor.sourceUrl}?onload=${this.constructor.callbackFunctionName}&render=explicit`
+      window[this.callbackFunctionName] = () => {
+        this.loadingState = 'ready'
+        delete window[this.callbackFunctionName]
+        this.pendingResolvers.splice(0).forEach(resolve => resolve())
+        this.pendingRejectors.splice(0)
+      }
+
+      const url = `${this.sourceUrl}?onload=${this.callbackFunctionName}&render=explicit`
       const script = document.createElement('script')
       script.src = url
       script.async = true
       script.defer = true
 
       script.addEventListener('error', () => {
-        this.loadingPromise.reject('Failed to load Turnstile.')
-        delete window[this.constructor.callbackFunctionName]
+        this.loadingState = 'unloaded'
+        delete window[this.callbackFunctionName]
+        this.pendingRejectors.splice(0).forEach(reject => reject('Failed to load Turnstile.'))
+        this.pendingResolvers.splice(0)
       })
 
       document.head.appendChild(script)
     }
 
-    // Return a promise that we can resolve when the callback function is
-    // called by the Turnstile JS when it is ready.
+    // Loading is already in progress — queue this caller alongside any others.
     return new Promise((resolve, reject) => {
-      this.loadingPromise = { resolve, reject }
-
-      // If turnstile is already defined, resolve immediately.
-      if (this.loadingState === 'ready') {
-        resolve()
-        delete window[this.constructor.callbackFunctionName]
-      }
+      this.pendingResolvers.push(resolve)
+      this.pendingRejectors.push(reject)
     })
   }
 }

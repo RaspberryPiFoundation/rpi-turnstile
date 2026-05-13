@@ -4,6 +4,9 @@ class HomeController < ApplicationController
   def show
   end
 
+  def multiple
+  end
+
   def submit
     notice = rpi_turnstile_verified? ? "✅ Turnstile verification passed." : "❌ Turnstile verification failed."
 
