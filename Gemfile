@@ -22,6 +22,7 @@ group :development do
 end
 
 group :test, :development do
+  gem 'appraisal'
   gem 'dotenv-rails', require: 'dotenv/rails-now'
 end
 
