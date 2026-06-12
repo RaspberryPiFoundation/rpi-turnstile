@@ -14,8 +14,11 @@ jobs:
 
      - uses: browser-actions/setup-firefox@v1
 
+     - name: Install appraisal dependencies
+       run: bundle exec appraisal install
+
      - name: Run rspec
-       run: bundle exec rspec
+       run: bundle exec appraisal rspec
 
      - name: Archive coverage
        if: ${{ success() || failure() }}
