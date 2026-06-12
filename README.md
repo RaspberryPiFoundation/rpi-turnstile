@@ -85,6 +85,14 @@ Or install it yourself as:
 $ gem install rpi_turnstile
 ```
 
+## Testing
+
+Tests are run using rspec, and can be run against both Rails 7 and 8 using [Appraisal](https://github.com/thoughtbot/appraisal)
+
+```
+bundle exec appraisal rspec
+```
+
 ## Demo app
 
 To see the component in the demo app, run
@@ -94,6 +102,11 @@ bundle exec rails s
 ```
 
 and head to port 3000.
+
+To run with a specific Rails version, you can use the [Appraisal](https://github.com/thoughtbot/appraisal)
+
+```
+bundle exec appraisal rails-8 rails s
 
 ## License
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
