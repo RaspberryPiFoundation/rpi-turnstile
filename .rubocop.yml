@@ -17,3 +17,4 @@ AllCops:
     - 'spec/dummy/bin/**/*'
     - 'vendor/**/*'
     - 'bin/rails'
+    - "gemfiles/**/*.gemfile" # Exclude Appraisal-generated Gemfiles
