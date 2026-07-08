@@ -5,8 +5,6 @@ module RpiTurnstile
     BASE_CLASS = 'rpi-turnstile'
 
     def initialize(attrs: {}, **kwargs)
-      super
-
       classes = [BASE_CLASS]
       classes += Array(attrs[:class])
 

@@ -27,5 +27,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'rails', '>= 7.0', '< 9.0'
   spec.add_dependency 'sprockets-rails', '~> 3.4'
   spec.add_dependency 'stimulus-rails', '~> 1.2'
-  spec.add_dependency 'view_component', '>= 2.0', '< 4.0'
+  spec.add_dependency 'view_component', '>= 2.0', '< 5.0'
 end
