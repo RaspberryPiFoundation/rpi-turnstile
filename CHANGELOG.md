@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [0.7.0] - 2026-07-08
+
 ### Changed
 
 * Added support for view_component ~> 4.0
@@ -61,6 +63,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 * Initial release
 
 [unreleased]: https://github.com/RaspberryPiFoundation/rpi-turnstile/compare/v0.5.0...HEAD
+[0.7.0]: https://github.com/RaspberryPiFoundation/rpi-turnstile/releases/tag/v0.7.0
+[0.6.0]: https://github.com/RaspberryPiFoundation/rpi-turnstile/releases/tag/v0.6.0
 [0.5.0]: https://github.com/RaspberryPiFoundation/rpi-turnstile/releases/tag/v0.5.0
 [0.4.0]: https://github.com/RaspberryPiFoundation/rpi-turnstile/releases/tag/v0.4.0
 [0.3.1]: https://github.com/RaspberryPiFoundation/rpi-turnstile/releases/tag/v0.3.1
