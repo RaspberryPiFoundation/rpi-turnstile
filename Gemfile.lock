@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rpi_turnstile (0.6.0)
+    rpi_turnstile (0.7.0)
       faraday (~> 2.0)
       importmap-rails
       rails (>= 7.0, < 9.0)
