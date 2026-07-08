@@ -9,6 +9,11 @@ inherit_mode:
   merge:
     - Exclude
 
+# view_component 4.x no longer has a default initializer, so rubocop will complain about not calling super
+Lint/MissingSuper:
+  Exclude:
+    - 'app/components/**/*.rb'
+
 AllCops:
   TargetRubyVersion: 3.2
   Exclude:

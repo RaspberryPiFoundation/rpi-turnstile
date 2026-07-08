@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Changed
+
+* Added support for view_component ~> 4.0
+
 ## [0.6.0] - 2026-06-12
 
 ### Changed
