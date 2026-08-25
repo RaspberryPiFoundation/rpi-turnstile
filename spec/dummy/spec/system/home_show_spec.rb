@@ -51,21 +51,26 @@ RSpec.describe '/' do
   context 'when submiting the form' do
     context 'when CF turnstile is enabled' do
       let(:sitekey) { 'abc' }
+      let(:success) { true }
+      let(:verification) do
+        instance_double(Cloudflare::Turnstile::Rails::VerificationResponse, success?: success)
+      end
 
       before do
-        allow(RpiTurnstile::Api).to receive(:siteverify).and_return(true)
+        allow(RpiTurnstile::Api).to receive(:verify).and_return(verification)
         click_button('Submit')
       end
 
       it 'verifies with CF' do
-        expect(RpiTurnstile::Api).to have_received(:siteverify)
+        expect(RpiTurnstile::Api).to have_received(:verify)
       end
 
-      context 'when CF turnstile raises an error' do # rubocop:disable RSpec/NestedGroups
-        before do
-          allow(RpiTurnstile::Api).to receive(:siteverify).and_return(false)
-          click_button('Submit')
-        end
+      it 'sends the client IP' do
+        expect(RpiTurnstile::Api).to have_received(:verify).with(hash_including(remoteip: '127.0.0.1'))
+      end
+
+      context 'when CF turnstile rejects the token' do # rubocop:disable RSpec/NestedGroups
+        let(:success) { false }
 
         it 'throws an error message' do
           expect(page).to have_text('Turnstile verification failed')

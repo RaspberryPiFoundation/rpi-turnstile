@@ -1,6 +1,12 @@
 # RpiTurnstile
 
-ViewComponent and Stimulus controller for integration with Cloudflare Turnstile
+A ViewComponent for integrating Cloudflare Turnstile, wrapping the
+[cloudflare-turnstile-rails](https://github.com/vkononov/cloudflare-turnstile-rails) gem.
+
+That gem supplies the client-side script loading and the server-side token verification; this
+gem wraps them in a ViewComponent and a controller concern, and reads its configuration from the
+environment.  You don't need to add `cloudflare-turnstile-rails` to your Gemfile yourself, or run
+its install generator — it comes in as a dependency and is configured for you.
 
 ## Usage
 
@@ -29,6 +35,33 @@ Then in the controller that handles the POST from the form, include the `RpiTurn
   end
 ```
 
+`rpi_turnstile_verified?` reads the token from the `cf-turnstile-response` parameter for you, and
+sends the client's IP (`request.remote_ip`) along with it.  Cloudflare checks that IP against the
+one the token was issued to, which is an extra bit of protection against a token being replayed
+from elsewhere.
+
+If your app sits behind a proxy or CDN that isn't configured as a trusted proxy, `request.remote_ip`
+will be the proxy's address rather than the client's, and verification will start failing.  Pass
+`remoteip: nil` to leave it out of the request:
+
+```ruby
+rpi_turnstile_verified?(remoteip: nil)
+```
+
+Any other keyword arguments are passed through to Cloudflare too, so you can add
+[`idempotency_key`](https://developers.cloudflare.com/turnstile/get-started/server-side-validation/#accepted-parameters)
+or override `remoteip` with an address of your own.
+
+If you need more than a yes/no answer — the error codes, say, or the hostname the token came from —
+`rpi_turnstile_verified` (without the `?`) takes the same arguments and returns the full
+[`VerificationResponse`](https://github.com/vkononov/cloudflare-turnstile-rails):
+
+```ruby
+result = rpi_turnstile_verified
+result.success?  # => false
+result.errors    # => ["timeout-or-duplicate"]
+```
+
 Check out the Home controller in the [dummy app](spec/dummy/app/controllers/home_controller.rb) and its [associated views](spec/dummy/app/views/home/show.html.erb).
 
 ## Customising
@@ -39,13 +72,19 @@ There are [myriad options](https://developers.cloudflare.com/turnstile/get-start
 * theme
 * size
 
-The options should be exactly as shown in the docs, i.e. with dashes rather than the more usual underscores encountered in Ruby.  You can also add HTML attributes through the `attrs` parameter, e.g. `class`, `id`, etc.
+Options are rendered as `data-*` attributes on the widget container, so you can write them either
+as shown in the Cloudflare docs (with dashes) or with the more usual Ruby underscores —
+`'response-field-name'` and `response_field_name` both produce `data-response-field-name`.  You can
+also add HTML attributes through the `attrs` parameter, e.g. `class`, `id`, etc.
 
 To make use of these options, add them to the `new` call when rendering.
 
 ```ruby
 render RpiTurnstile::TurnstileComponent.new(attrs: { class: 'my-extra-css', id: 'woo'}, size: 'compact')
 ```
+
+The container always gets the `cf-turnstile` class (which is how Cloudflare's script finds it) plus
+`rpi-turnstile` for your own styling.  Anything you pass as `attrs[:class]` is added alongside them.
 
 ## Testing your integration
 
@@ -59,13 +98,27 @@ stub_const('RpiTurnstile::Api::SITEKEY', 'abc')
 
 That should allow the component to render.
 
-Secondly, to stub and check what happens when the API verifies (or not), you can stub the `RpiTurnstile::Api#siteverify` class method:
+Secondly, to stub and check what happens when the API verifies (or not), you can stub the `RpiTurnstile::Api.verify` class method:
 
-```rspec
-allow(RpiTurnstile::Api).to receive(:siteverify).and_return(true)
+```ruby
+allow(RpiTurnstile::Api).to receive(:verify).and_return(
+  instance_double(Cloudflare::Turnstile::Rails::VerificationResponse, success?: true)
+)
 ```
 
-Return `false` here if you want verification to fail.
+Pass `success?: false` if you want verification to fail.  Add `errors:` to the double if the code
+under test reads them.
+
+Stubbing `verify` is the recommended seam, because it short-circuits before any HTTP call is
+made.  If you don't stub it, `cloudflare-turnstile-rails` will substitute a dummy token for a blank
+response in the test environment and still attempt a real call to Cloudflare.  You can turn that
+substitution off in an initializer:
+
+```ruby
+Cloudflare::Turnstile::Rails.configure do |config|
+  config.auto_populate_response_in_test_env = false
+end
+```
 
 ## Installation
 

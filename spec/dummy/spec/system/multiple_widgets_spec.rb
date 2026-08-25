@@ -12,16 +12,23 @@ RSpec.describe '/multiple' do
       visit '/multiple'
     end
 
-    it 'renders both widget containers' do
-      expect(page).to have_css('div[data-controller="rpi-turnstile--turnstile"] > div', count: 2)
+    it 'renders a widget into both containers' do
+      expect(page).to have_css('div.cf-turnstile > div', count: 2, visible: :all)
+    end
+
+    it 'gives both widgets a response token to submit' do
+      expect(page).to have_css('div.cf-turnstile input[name="cf-turnstile-response"]', count: 2, visible: :all)
+    end
+
+    it 'only emits the loader script once' do
+      # cloudflare-turnstile-rails guards this with an ivar on the view context,
+      # which is why the component calls the helper via `helpers` rather than on
+      # itself — each component instance would otherwise emit its own copy.
+      expect(page).to have_css('script[src*="cloudflare_turnstile_helper"]', count: 1, visible: :all)
     end
 
     it 'only injects a single Turnstile script tag' do
-      # Both controllers connect synchronously on page load and both call
-      # loadTurnstile(). The shared static loadingState means only the first
-      # call injects a <script>; subsequent callers just queue a pending promise.
-      # We verify the outcome by counting script tags with the Turnstile URL.
-      expect(page).to have_css('script[src*="challenges.cloudflare.com/turnstile"]', count: 1, visible: false)
+      expect(page).to have_css('script[src*="challenges.cloudflare.com/turnstile"]', count: 1, visible: :all)
     end
   end
 end

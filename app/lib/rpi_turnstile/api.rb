@@ -1,39 +1,27 @@
 # frozen_string_literal: true
 
-require 'faraday'
-
 module RpiTurnstile
   class Api
-    API_URL = 'https://challenges.cloudflare.com/turnstile/v0/siteverify'
     SITEKEY = ENV.fetch('CLOUDFLARE_TURNSTILE_SITEKEY', nil)
     SECRET  = ENV.fetch('CLOUDFLARE_TURNSTILE_SECRET', nil)
 
     class << self
-      def siteverify(...)
-        new.siteverify(...)
+      def verify(...)
+        new.verify(...)
       end
     end
 
-    def siteverify(response:, secret: SECRET)
+    # Any extra keyword arguments are passed through to the underlying
+    # verification call, i.e. remoteip and idempotency_key.
+    def verify(response:, secret: SECRET, **)
+      # The underlying gem raises when no secret is configured. We'd rather let
+      # environments without keys through than break them.
       if secret.blank?
         Rails.logger.warn('Unable to verify turnstile response as no secret has been given')
-        return true
+        return Cloudflare::Turnstile::Rails::VerificationResponse.new('success' => true)
       end
 
-      response = conn.post(API_URL, response: response, secret: secret)
-
-      response.body['success']
-    end
-
-    private
-
-    def conn
-      @conn ||= Faraday.new(API_URL) do |f|
-        f.request :instrumentation
-        f.request :url_encoded
-        f.response :raise_error
-        f.response :json
-      end
+      Cloudflare::Turnstile::Rails::Verification.verify(response:, secret:, **)
     end
   end
 end
