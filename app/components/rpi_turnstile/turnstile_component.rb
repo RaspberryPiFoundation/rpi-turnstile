@@ -3,18 +3,20 @@
 module RpiTurnstile
   class TurnstileComponent < ViewComponent::Base
     BASE_CLASS = 'rpi-turnstile'
+    # cloudflare-turnstile-rails only renders widgets with this class.
+    WIDGET_CLASS = ::Cloudflare::Turnstile::Rails::Cloudflare::WIDGET_CLASS
 
     def initialize(attrs: {}, **kwargs)
-      classes = [BASE_CLASS]
+      RpiTurnstile.deprecator.warn(
+        'RpiTurnstile::TurnstileComponent is deprecated; use cloudflare_turnstile_tag ' \
+        'from cloudflare-turnstile-rails instead.'
+      )
+
+      classes = [BASE_CLASS, WIDGET_CLASS]
       classes += Array(attrs[:class])
 
-      data = { controller: 'rpi-turnstile--turnstile',
-               'rpi-turnstile--turnstile-target': 'container' }
-
-      options = kwargs.merge(language: I18n.locale || :en, sitekey: sitekey)
-      data['rpi-turnstile--turnstile-options-value'] = options.to_json
-
-      @attrs = attrs.merge(class: classes, data: data)
+      @data = { language: I18n.locale || :en }.merge(attrs.fetch(:data, {}), kwargs)
+      @attrs = attrs.except(:class, :data).merge(class: classes)
     end
 
     def sitekey
@@ -26,7 +28,7 @@ module RpiTurnstile
     end
 
     def call
-      tag.div(**@attrs)
+      helpers.cloudflare_turnstile_tag(site_key: sitekey, data: @data, **@attrs)
     end
   end
 end

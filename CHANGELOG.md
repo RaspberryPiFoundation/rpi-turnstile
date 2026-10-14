@@ -6,6 +6,24 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Deprecated
+
+* This gem is deprecated in favour of [cloudflare-turnstile-rails](https://github.com/vkononov/cloudflare-turnstile-rails).  `RpiTurnstile::TurnstileComponent` and `rpi_turnstile_verified?` now emit deprecation warnings.  See the README for migration instructions.
+
+### Changed
+
+* Rewritten as a wrapper around cloudflare-turnstile-rails.  The component now renders via `cloudflare_turnstile_tag`, and verification goes through `Cloudflare::Turnstile::Rails::Verification`.
+* The widget is now configured with `data-*` attributes and rendered implicitly by Cloudflare's script, rather than by a Stimulus controller.  It has both the `rpi-turnstile` and `cf-turnstile` classes.
+* A `language` option passed to the component now overrides the `I18n.locale` default.
+* `CLOUDFLARE_TURNSTILE_SITEKEY` and `CLOUDFLARE_TURNSTILE_SECRET` are copied into the cloudflare-turnstile-rails configuration if it hasn't already been set.
+* Network errors during verification now raise `Cloudflare::Turnstile::Rails::ConfigurationError` instead of `Faraday::Error`, and non-2xx responses from Cloudflare no longer raise.
+* In the test environment, a blank `cf-turnstile-response` is sent to Cloudflare as `dummy-response` (cloudflare-turnstile-rails' `auto_populate_response_in_test_env`, on by default).
+
+### Removed
+
+* The `rpi-turnstile--turnstile` Stimulus controller and its importmap pin.
+* The `faraday`, `importmap-rails` and `stimulus-rails` dependencies.
+
 ## [0.7.0] - 2026-07-08
 
 ### Changed

@@ -20,15 +20,17 @@ RSpec.describe RpiTurnstile::TurnstileComponent, type: :component do
 
   context 'when sitekey is set' do
     let(:sitekey) { 'abc' }
-    let(:options) { { language: :en, sitekey: sitekey } }
-    let(:encoded_opts) { options.to_json }
 
-    it { is_expected.to have_css("div.rpi-turnstile[data-controller='rpi-turnstile--turnstile'][data-rpi-turnstile--turnstile-target='container'][data-rpi-turnstile--turnstile-options-value='#{encoded_opts}']") }
+    it { is_expected.to have_css("div.rpi-turnstile.cf-turnstile[data-sitekey='abc'][data-language='en']") }
+
+    it 'includes the cloudflare-turnstile-rails helper script' do
+      expect(page).to have_css('script[src*="cloudflare_turnstile_helper"]', visible: :all)
+    end
 
     context 'when a class is set' do
       let(:attrs) { { class: 'foo' } }
 
-      it { is_expected.to have_css('div.rpi-turnstile.foo') }
+      it { is_expected.to have_css('div.rpi-turnstile.cf-turnstile.foo') }
     end
 
     context 'when an ID is set' do
@@ -37,11 +39,22 @@ RSpec.describe RpiTurnstile::TurnstileComponent, type: :component do
       it { is_expected.to have_css('div.rpi-turnstile#foo') }
     end
 
-    context 'when another option is set' do
-      let(:component) { described_class.new(foo: :bar, attrs: {}) }
-      let(:options) { { foo: :bar, language: :en, sitekey: sitekey } }
+    context 'when data attributes are set' do
+      let(:attrs) { { data: { action: 'login' } } }
 
-      it { is_expected.to have_css("div.rpi-turnstile[data-rpi-turnstile--turnstile-options-value='#{encoded_opts}']") }
+      it { is_expected.to have_css("div.rpi-turnstile[data-action='login'][data-sitekey='abc']") }
+    end
+
+    context 'when another option is set' do
+      let(:component) { described_class.new(size: 'compact', attrs: {}) }
+
+      it { is_expected.to have_css("div.rpi-turnstile[data-size='compact'][data-language='en']") }
+    end
+
+    context 'when the language is set' do
+      let(:component) { described_class.new(language: 'fr') }
+
+      it { is_expected.to have_css("div.rpi-turnstile[data-language='fr']") }
     end
   end
 end

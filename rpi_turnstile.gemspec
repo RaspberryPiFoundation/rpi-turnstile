@@ -9,9 +9,9 @@ Gem::Specification.new do |spec|
   spec.email       = ['web@raspberrypi.org']
   spec.homepage    = 'https://github.com/RaspberryPiFoundation/rpi-turnstile'
   spec.license     = 'MIT'
-  spec.summary     = 'Rails integration for Cloudflare Turnstile'
-  spec.description = 'Uses ViewComponent and Stimulus controller for simple
-  inclusion of with Cloudflare Turnstile in your app.'
+  spec.summary     = 'Rails integration for Cloudflare Turnstile (deprecated)'
+  spec.description = 'Deprecated ViewComponent wrapper around cloudflare-turnstile-rails.
+  Use cloudflare-turnstile-rails directly instead.'
 
   spec.metadata['homepage_uri'] = spec.homepage
   spec.metadata['source_code_uri'] = 'https://github.com/RaspberryPiFoundation/rpi-turnstile'
@@ -22,10 +22,11 @@ Gem::Specification.new do |spec|
 
   spec.required_ruby_version = '>= 3.2'
 
-  spec.add_dependency 'faraday', '~> 2.0'
-  spec.add_dependency 'importmap-rails'
+  spec.add_dependency 'cloudflare-turnstile-rails', '~> 1.2'
   spec.add_dependency 'rails', '>= 7.0', '< 9.0'
   spec.add_dependency 'sprockets-rails', '~> 3.4'
-  spec.add_dependency 'stimulus-rails', '~> 1.2'
   spec.add_dependency 'view_component', '>= 2.0', '< 5.0'
+
+  spec.post_install_message = 'rpi_turnstile is deprecated; please migrate to cloudflare-turnstile-rails. ' \
+                              'See https://github.com/RaspberryPiFoundation/rpi-turnstile#deprecation'
 end
