@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
-require 'faraday'
-
 module RpiTurnstile
   class Api
-    API_URL = 'https://challenges.cloudflare.com/turnstile/v0/siteverify'
+    API_URL = ::Cloudflare::Turnstile::Rails::Cloudflare::SITE_VERIFY_URL
     SITEKEY = ENV.fetch('CLOUDFLARE_TURNSTILE_SITEKEY', nil)
     SECRET  = ENV.fetch('CLOUDFLARE_TURNSTILE_SECRET', nil)
 
@@ -14,26 +12,13 @@ module RpiTurnstile
       end
     end
 
-    def siteverify(response:, secret: SECRET)
+    def siteverify(response:, secret: SECRET) # rubocop:disable Naming/PredicateMethod
       if secret.blank?
         Rails.logger.warn('Unable to verify turnstile response as no secret has been given')
         return true
       end
 
-      response = conn.post(API_URL, response: response, secret: secret)
-
-      response.body['success']
-    end
-
-    private
-
-    def conn
-      @conn ||= Faraday.new(API_URL) do |f|
-        f.request :instrumentation
-        f.request :url_encoded
-        f.response :raise_error
-        f.response :json
-      end
+      ::Cloudflare::Turnstile::Rails::Verification.verify(response: response, secret: secret).success?
     end
   end
 end

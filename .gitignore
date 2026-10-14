@@ -9,6 +9,7 @@ node_modules/
 server.pid
 examples.txt
 .rubocop-https*
+.rubocop-remote*
 
 /.DS_Store
 /coverage/
